@@ -1,0 +1,4925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>tt</short-name>
+	<uri>/tt-tags</uri>
+	<display-name>自定义标签</display-name>
+
+
+	<!-- =========自动引入JS CSS -->
+	<tag>
+		<name>head</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.HeadTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>自动引入JS</description>
+		<attribute>
+			<name>theme</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				风格,目前支持bootstrap,
+				default,metro，如果自定义(component/easyui/themes/)
+			</description>
+		</attribute>
+		<attribute>
+			<name>resTypes</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				定义需要引入的JS/CSS类别;默认为all,可选值
+				jquery,jquery_cookie,jquery_form,jquery_json,jquery_url,jquery_easy_ui,jquery_validate,tt-all,
+				tt_base,tt_base_ui,tt_form,tt_grid,tt_tree,tt_tab,tt_window,tt_date,tt_rds,all
+			</description>
+		</attribute>
+	</tag>
+
+	<!-- ============== rds Tag ====================== -->
+	<tag>
+		<name>rds</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.RdsTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>rds. 数据获取控件</description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>name. rds js Object</description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service
+				Bean Id
+			</description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				conditions.查询条件
+				conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式
+			</description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID
+			</description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>导出实体属性,默认为*,代表导出实体普通属性</description>
+		</attribute>
+	</tag>
+
+	<!-- =========将实体对象放入pageContext范围对象中 -->
+	<tag>
+		<name>entityGet</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.RdsEntityGetTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>将实体对象放入pageContext范围对象中</description>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>范围对象KEY</description>
+		</attribute>
+		<attribute>
+			<name>modelClass</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>实体全路径名</description>
+		</attribute>
+		<attribute>
+			<name>moId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>实体ID</description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>导出的属性，默认为所有基本属性</description>
+		</attribute>
+	</tag>
+
+	<!-- ========= 实体迭代器 EntityIterator,类似于c:forEach -->
+	<tag>
+		<name>entityIterator</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.RdsEntityIteratorTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description>将实体对象放入pageContext范围对象中</description>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>范围对象KEY</description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions.查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+
+		<attribute>
+			<name>status</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[迭代器状态，包括当前迭代索引，迭代数量]]></description>
+		</attribute>
+
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[数据条数]]></description>
+		</attribute>
+
+	</tag>
+
+	<!-- ========== 单选 rds -->
+	<tag>
+		<name>rdsRadio</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.form.RdsRadioTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI rdsRadio.复选rdsRadio]]></description>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name. Form 表单域]]></description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions.查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[extrProps.需要导出的熟悉，默认为*，所有普通属性]]></description>
+		</attribute>
+		<attribute>
+			<name>listText</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listText.对应Model的属性，显示用]]></description>
+		</attribute>
+		<attribute>
+			<name>listValue</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listValue.对应Model属性，向后台传送该值]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ========== 复选checkbox rds -->
+	<tag>
+		<name>rdsCheckBox</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.form.RdsCheckBoxTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI rdsCheckbox.复选checkbox]]></description>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name. Form 表单域]]></description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions.查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[extrProps.需要导出的熟悉，默认为*，所有普通属性]]></description>
+		</attribute>
+		<attribute>
+			<name>listText</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listText.对应Model的属性，显示用]]></description>
+		</attribute>
+		<attribute>
+			<name>listValue</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listValue.对应Model属性，向后台传送该值]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+	</tag>
+
+	<!-- 下拉列表框, 支持 级联选择 -->
+	<tag>
+		<name>rdsSelect</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.form.RdsSelectTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI rdsSelect.下拉列表，自身通过RDS从后台加载数据]]></description>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name. Form 表单域]]></description>
+		</attribute>
+		<attribute>
+			<name>html5</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[html5. 是否使用Html5风格,默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>initData</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[initData. 是否初始化数据]]></description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions.查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[extrProps.需要导出的属性，默认为*，所有普通属性]]></description>
+		</attribute>
+		<attribute>
+			<name>headerLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[headerLabel. 默认显示label]]></description>
+		</attribute>
+		<attribute>
+			<name>headerValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[headerValue. 默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>listText</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listText.对应Model的属性，显示用]]></description>
+		</attribute>
+		<attribute>
+			<name>listValue</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listValue.对应Model属性，向后台传送该值]]></description>
+		</attribute>
+
+		<attribute>
+			<name>referSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[referSelect.引用的select ID]]></description>
+		</attribute>
+		<attribute>
+			<name>referColumn</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[referColumn.级联参照属性]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onchange.]]></description>
+		</attribute>
+		
+		<attribute>
+			<name>comboxWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxWidth. 组件的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxHeight. 组件的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelWidth. 下拉面板宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelHeight. 下拉面板高度]]></description>
+		</attribute>
+		<attribute>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[multiple. 是否可以多选]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectOnNavigation</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnNavigation. 定义是否允许使用键盘导航来选择项目]]></description>
+		</attribute>
+		<attribute>
+			<name>separator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[separator. 在多选的时候使用何种分隔符进行分割 默认为,]]></description>
+		</attribute>
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[editable. 定义用户是否可以直接输入文本到字段中]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled. 设置启用/禁用字段]]></description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[readonly. 设置该字段为读写/只读模式]]></description>
+		</attribute>
+		<attribute>
+			<name>panelAlign</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[panelAlign. 面板对齐方式。可用值有：'left','right']]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[value. 组建默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delay. 最后一次输入事件与执行搜索之间的延迟间隔（执行自动完成功能的延迟间隔）]]></description>
+		</attribute>
+		<attribute>
+			<name>onShowPanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onShowPanel. 当下拉面板显示的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onHidePanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onHidePanel. 当下拉面板隐藏的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onChange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onChange. 当字段值改变的时候触发]]></description>
+		</attribute>
+
+		<!-- 验证相关 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+	</tag>
+
+	<!-- ============== Form Tag ====================== -->
+	<tag>
+		<name>form</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.FormTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[form. 表单控件 ]]></description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name. form js Object]]></description>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[action 后台请求地址]]></description>
+		</attribute>
+		<attribute>
+			<name>method</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[method 提交方式，默认为post,可选值get]]></description>
+		</attribute>
+		<attribute>
+			<name>enctype</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[enctype:数据提交类型]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass:样式]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass:样式]]></description>
+		</attribute>
+		<attribute>
+			<name>validateType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[validateType:验证框架类型,1：jquery validate;2:jquery easyui validate 默认为1]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ============== Form text标签 文本框和密码框  ====================== -->
+	<tag>
+		<name>text</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.TextTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI textTag.文本框，密码框组件 ]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name.表单域，向后台传参数名]]></description>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[Html Id]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>高度</description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>宽度</description>
+		</attribute>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[size.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[type.默认为text,可选值password]]></description>
+		</attribute>
+		<attribute>
+			<name>prompt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[prompt.在输入框显示提示消息]]></description>
+		</attribute>
+
+		<attribute>
+			<name>multiline</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[multiline.是否多行文本,默认为false]]></description>
+		</attribute>
+		<!-- 
+			<attribute> readonly
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[editable.定义用户是否可以直接在该字段内输入文字,默认为true]]></description>
+			</attribute>
+		-->
+		<attribute>
+			<name>iconCls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconCls.文本框显示背景图标]]></description>
+		</attribute>
+		<attribute>
+			<name>iconAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconAlign.背景图标的位置。可用值有："left", "right"]]></description>
+		</attribute>
+		<attribute>
+			<name>iconWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconWidth.图标宽度]]></description>
+		</attribute>
+
+		<!-- 验证相关 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+
+
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onChange. 当字段值改变的时候触发]]></description>
+		</attribute>
+	</tag>
+
+
+	<!-- ============== Form File标签 文本框和密码框  ====================== -->
+	<tag>
+		<name>file</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.FileTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI FileTag.文件域 ]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name.表单域，向后台传参数名]]></description>
+		</attribute>
+		<attribute>
+			<name>buttonText</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[buttonText.在文本框上附加的按钮显示的文本,默认为 浏览]]></description>
+		</attribute>
+		<attribute>
+			<name>buttonIcon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[buttonIcon.在文本框上附加的按钮显示的图标]]></description>
+		</attribute>
+		<attribute>
+			<name>buttonAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[buttonAlign.附加按钮位置。可用值有："left", "right",默认 right]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>高度</description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>宽度</description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[type.默认为text,可选值password]]></description>
+		</attribute>
+		<attribute>
+			<name>prompt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[prompt.在输入框显示提示消息]]></description>
+		</attribute>
+
+		<attribute>
+			<name>multiline</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[multiline.是否多行文本,默认为false]]></description>
+		</attribute>
+		<!-- 
+			<attribute> readonly
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[editable.定义用户是否可以直接在该字段内输入文字,默认为true]]></description>
+			</attribute>
+		-->
+		<attribute>
+			<name>iconCls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconCls.文本框显示背景图标]]></description>
+		</attribute>
+		<attribute>
+			<name>iconAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconAlign.背景图标的位置。可用值有："left", "right"]]></description>
+		</attribute>
+		<attribute>
+			<name>iconWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[iconWidth.图标宽度]]></description>
+		</attribute>
+
+		<!-- 验证相关 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+
+
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ========= 单选按钮，从资源文件读取数据 -->
+	<tag>
+		<name>resRadio</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.ResRadioTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI resRadio.单选按钮，从资源文件读取数据]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name.表单域，向后台传参数名]]></description>
+		</attribute>
+		<attribute>
+			<name>resKey</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[resKey.对应资源文件Key]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ========== 复选checkbox 从资源文件加载数据 -->
+	<tag>
+		<name>resCheckBox</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.ResCheckBoxTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI resCheckBox.复选checkbox 从资源文件加载数据]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name.表单域，向后台传参数名]]></description>
+		</attribute>
+		<attribute>
+			<name>resKey</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[resKey.对应资源文件Key]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ======== 下拉列表，数据从资源文件获得 -->
+	<tag>
+		<name>resSelect</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.ResSelectTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[UI resSelect.下拉列表，数据从资源文件获得]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name.表单域名,后台接收参数名]]></description>
+		</attribute>
+		<attribute>
+			<name>resKey</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[resKey. 对应资源文件KEY]]></description>
+		</attribute>
+		<attribute>
+			<name>headerLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[headerLabel. 下拉列表默认显示]]></description>
+		</attribute>
+		<attribute>
+			<name>headerValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[headerValue. 下拉列表默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>html5</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[html5. 是否使用Html5风格,默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value. 值]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title.]]></description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tabindex.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[label.]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled.]]></description>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssClass.CSS 样式类名]]></description>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cssStyle. CSS 样式定义]]></description>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[ondblclick.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousedown.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseover.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmousemove.]]></description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onmouseout.]]></description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onfocus.]]></description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onblur.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeyup.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeypress.]]></description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onkeydown.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>comboxWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxWidth. 组件的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxHeight. 组件的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelWidth. 下拉面板宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelHeight. 下拉面板高度]]></description>
+		</attribute>
+		<attribute>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[multiple. 是否可以多选]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectOnNavigation</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnNavigation. 定义是否允许使用键盘导航来选择项目]]></description>
+		</attribute>
+		<attribute>
+			<name>separator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[separator. 在多选的时候使用何种分隔符进行分割 默认为,]]></description>
+		</attribute>
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[editable. 定义用户是否可以直接输入文本到字段中]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled. 设置启用/禁用字段]]></description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[readonly. 设置该字段为读写/只读模式]]></description>
+		</attribute>
+		<attribute>
+			<name>panelAlign</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[panelAlign. 面板对齐方式。可用值有：'left','right']]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[value. 组建默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delay. 最后一次输入事件与执行搜索之间的延迟间隔（执行自动完成功能的延迟间隔）]]></description>
+		</attribute>
+		<attribute>
+			<name>onShowPanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onShowPanel. 当下拉面板显示的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onHidePanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onHidePanel. 当下拉面板隐藏的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onChange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onChange. 当字段值改变的时候触发]]></description>
+		</attribute>
+
+		<!-- 验证相关 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+	</tag>
+
+	<!-- =====日期控件=========== -->
+	<tag>
+		<name>datePicker</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.DatePickerTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>日期控件</description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id.控件ID]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[name. 表单域名]]></description>
+		</attribute>
+		<attribute>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[name. 日期格式]]></description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[是否只读]]></description>
+		</attribute>
+
+		<attribute>
+			<name>startDate</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[开始日期]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[日期改变事件]]></description>
+		</attribute>
+
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[样式相关]]></description>
+		</attribute>
+
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[样式相关]]></description>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>window</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.win.WindowTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description>window 弹出窗口</description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>窗口名字</description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>高度</description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>宽度</description>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>url，默认以div,可选方式iframe 的方式载入目宽度</description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>标题</description>
+		</attribute>
+		<attribute>
+			<name>iframe</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>使用url载入时，如果设置为true,则使用iframe引入</description>
+		</attribute>
+		<attribute>
+			<name>frameName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>创建iframe时 作为iframe的name和id</description>
+		</attribute>
+		<attribute>
+			<name>left</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>相对窗口left</description>
+		</attribute>
+		<attribute>
+			<name>top</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>相对窗口top</description>
+		</attribute>
+		<attribute>
+			<name>modal</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否模态对话框</description>
+		</attribute>
+		<attribute>
+			<name>resize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否调整大小</description>
+		</attribute>
+		<attribute>
+			<name>allowClose</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>允许关闭</description>
+		</attribute>
+		<attribute>
+			<name>timeParmName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				是否给URL后面加上值为new Date().getTime()的参数，如果需要指定一个参数名即可
+			</description>
+		</attribute>
+		<attribute>
+			<name>closeWhenEnter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>回车时是否关闭dialog</description>
+		</attribute>
+		<!-- 
+			<attribute>
+			<name>hidden</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>关闭对话框时是否只是隐藏，还是销毁对话框</description>
+			</attribute>
+		-->
+		<attribute>
+			<name>show</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>初始化时是否马上显示</description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>标题</description>
+		</attribute>
+		<attribute>
+			<name>showMax</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否显示最大化</description>
+		</attribute>
+		<attribute>
+			<name>showToggle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否显示收缩</description>
+		</attribute>
+		<attribute>
+			<name>showMin</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>是否显示最小化</description>
+		</attribute>
+
+		<!-- 事件 -->
+		<attribute>
+			<name>onLoaded</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>加载完事件</description>
+		</attribute>
+		<attribute>
+			<name>onExtend</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>展开事件</description>
+		</attribute>
+		<attribute>
+			<name>onExtended</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>展开完事件</description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>收缩事件</description>
+		</attribute>
+		<attribute>
+			<name>onCollapseed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>收缩完事件</description>
+		</attribute>
+		<attribute>
+			<name>onContentHeightChange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>内容区域高度改变事件</description>
+		</attribute>
+		<attribute>
+			<name>onClosed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>关闭后事件</description>
+		</attribute>
+		<attribute>
+			<name>onStopResize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>窗口大小停止调整前事件</description>
+		</attribute>
+	</tag>
+
+
+
+	<!-- ==================Grid Tag -->
+	<!-- ========= Grid 组件 ==== -->
+	<tag>
+		<name>grid</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.GridTag
+		</tag-class>
+		<body-content>scriptless</body-content>
+		<description><![CDATA[Grid 组件]]></description>
+
+		<attribute>
+			<name>queryForm</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[queryForm. 对应查询表单的名字]]></description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions. 查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query. 查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[extrProps. 需要导出的熟悉，默认为*，所有普通属性]]></description>
+		</attribute>
+		<attribute>
+			<name>showModel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[showModel. 列表显示名称: tree树 list列表]]></description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[width. ]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[height.]]></description>
+		</attribute>
+		<attribute>
+			<name>fitColumns</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[fitColumns. 设置为true将自动使列适应表格宽度以防止出现水平滚动。]]></description>
+		</attribute>
+		<attribute>
+			<name>fit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[fit.设置为true时，表格自动随父容器尺寸变化而变化，始终填充整个父容器]]></description>
+		</attribute>
+		<attribute>
+			<name>autoRowHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[autoRowHeight. 定义设置行的高度，根据该行的内容。设置为false可以提高负载性能。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>striped</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[striped. 设置为true将交替显示行背景。默认为false]]></description>
+		</attribute>
+		<attribute>
+			<name>nowrap</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[nowrap. 设置为true，当数据长度超出列宽时将会自动截取。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>idField</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[idField.表明该列是一个唯一列。是否表示唯一类，树形列表自动设置为ID]]></description>
+		</attribute>
+		<attribute>
+			<name>pagination</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pagination.是否分页树形表格默认为false,列表表格默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>rownumbers</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[rownumbers. 设置为true将显示行数。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>singleSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[singleSelect.是否只能选择一行，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>cascadeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cascadeCheck:三级联动(父节点和子节点都被选中,但未加载的子节点，不选择) ]]></description>
+		</attribute>
+
+		<attribute>
+			<name>deepCascadeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[deepCascadeCheck:深度级联(包括未加载的子节点),针对子节点 ]]></description>
+		</attribute>
+
+		<attribute>
+			<name>checkOnSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[checkOnSelect.如果为true，该复选框被选中/取消选中，当用户点击某一行上。如果为false，该复选框仅检查/取消选中，当用户点击完全的复选框。]]></description>
+		</attribute>
+		<attribute>
+			<name>selectOnCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnCheck.设置为true，单击一个复选框，将始终选择行。如果为false，不会选择行选中该复选框。]]></description>
+		</attribute>
+		<attribute>
+			<name>pageNumber</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageNumber. 当前页数]]></description>
+		</attribute>
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageSize.每页显示条数]]></description>
+		</attribute>
+		<attribute>
+			<name>pageList</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageList.分页页数下拉显示数,10,20,30,40,50]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[name. 表格JS 对象,在JSP页面使用该名字调用表格方法]]></description>
+		</attribute>
+		<attribute>
+			<name>lazyLoad</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[lazyLoad. 数据是否延迟加载，只对树型列表有用]]></description>
+		</attribute>
+		<attribute>
+			<name>initData</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[initData. 是否在显示表格时初使化数据，默认为true]]></description>
+		</attribute>
+
+		<attribute>
+			<name>enableHeaderContextMenu</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[enableHeaderContextMenu. 是否开启表头列名称右键点击菜单，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>enableHeaderClickMenu</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[enableHeaderClickMenu. 是否开启表头列名称右侧那个箭头形状的鼠标左键点击菜单，默认为true]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onLoadSuccess</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onLoadSuccess. 当数据载入成功时触发。]]></description>
+		</attribute>
+		<attribute>
+			<name>onLoadError</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onLoadError. 当载入远程数据发生错误时触发。]]></description>
+		</attribute>
+		<attribute>
+			<name>onClickRow</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onClickRow. 当用户点击行时触发，参数如下：rowIndex：被点击的行索引，从0开始。rowData：对应于被点击的行的记录。]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClickRow</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onDblClickRow. 当用户双击一行时触发，参数如下：rowIndex：被点击的行索引，从0开始。rowData：对应于被点击的行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onClickCell</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onClickCell.当用户点击单元格时触发。属性列表:rowIndex, field, value]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClickCell</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onDblClickCell. 当用户双击单元格时触发。 属性列表:rowIndex, field, value]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeExpand. 节点展开之前触发,返回false将取消展开动作.参数row,行记录]]></description>
+		</attribute>
+		<attribute>
+			<name>onExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onExpand. 在节点被展开的时候触发.参数row,行记录]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeCollapse.节点折叠之前触发,返回false取消折叠动作.]]></description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onCollapse. 节点折叠后触发.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onSelect. 当用户选择一行是触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onUnselect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onUnselect. 当用户取消选择一行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onSelectAll</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onSelectAll. 当用户选择所有行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onUnselectAll</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onUnselectAll. 当用户取消选择所有行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onBeforeEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeEdit. 当用户开始编辑一行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+
+		<attribute>
+			<name>onAfterEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onAfterEdit. 当用户编辑完成时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onCancelEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onCancelEdit. 当用户取消编辑行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ========= Combox Grid 组件 ==== -->
+	<tag>
+		<name>comboxGrid</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.ComboxGridTag
+		</tag-class>
+		<body-content>scriptless</body-content>
+		<description><![CDATA[ComboxGrid 组件]]></description>
+
+		<attribute>
+			<name>inputName</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[inputName. 字段名称，用于表单接受参数值]]></description>
+		</attribute>
+
+		<attribute>
+			<name>listText</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listText. 相当与下列选项的text]]></description>
+		</attribute>
+		<attribute>
+			<name>listValue</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listValue. 相当与下列选项的value]]></description>
+		</attribute>
+
+		<attribute>
+			<name>comboxWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxWidth. 组件的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxHeight. 组件的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelWidth. 下拉面板宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelHeight. 下拉面板高度]]></description>
+		</attribute>
+		<attribute>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[multiple. 是否可以多选]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectOnNavigation</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnNavigation. 定义是否允许使用键盘导航来选择项目]]></description>
+		</attribute>
+		<attribute>
+			<name>separator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[separator. 在多选的时候使用何种分隔符进行分割 默认为,]]></description>
+		</attribute>
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[editable. 定义用户是否可以直接输入文本到字段中]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled. 设置启用/禁用字段]]></description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[readonly. 设置该字段为读写/只读模式]]></description>
+		</attribute>
+		<attribute>
+			<name>panelAlign</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[panelAlign. 面板对齐方式。可用值有：'left','right']]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[value. 组建默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delay. 最后一次输入事件与执行搜索之间的延迟间隔（执行自动完成功能的延迟间隔）]]></description>
+		</attribute>
+		<attribute>
+			<name>onShowPanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onShowPanel. 当下拉面板显示的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onHidePanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onHidePanel. 当下拉面板隐藏的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onChange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onChange. 当字段值改变的时候触发]]></description>
+		</attribute>
+
+		<!-- 以下属性 为验证属性 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+
+
+		<!-- 以下属性继承自 Grid  -->
+		<attribute>
+			<name>queryForm</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[queryForm. 对应查询表单的名字]]></description>
+		</attribute>
+		<attribute>
+			<name>dataProvider</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service Bean Id]]></description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[conditions. 查询条件 conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query. 查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID]]></description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[extrProps. 需要导出的熟悉，默认为*，所有普通属性]]></description>
+		</attribute>
+		<attribute>
+			<name>showModel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[showModel. 列表显示名称: tree树 list列表]]></description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[width. ]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[height.]]></description>
+		</attribute>
+		<attribute>
+			<name>fitColumns</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[fitColumns. 设置为true将自动使列适应表格宽度以防止出现水平滚动。]]></description>
+		</attribute>
+		<attribute>
+			<name>fit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[fit.设置为true时，表格自动随父容器尺寸变化而变化，始终填充整个父容器]]></description>
+		</attribute>
+		<attribute>
+			<name>autoRowHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[autoRowHeight. 定义设置行的高度，根据该行的内容。设置为false可以提高负载性能。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>striped</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[striped. 设置为true将交替显示行背景。默认为false]]></description>
+		</attribute>
+		<attribute>
+			<name>nowrap</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[nowrap. 设置为true，当数据长度超出列宽时将会自动截取。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>idField</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[idField.表明该列是一个唯一列。是否表示唯一类，树形列表自动设置为ID]]></description>
+		</attribute>
+		<attribute>
+			<name>pagination</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pagination.是否分页树形表格默认为false,列表表格默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>rownumbers</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[rownumbers. 设置为true将显示行数。默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>singleSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[singleSelect.是否只能选择一行，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>cascadeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cascadeCheck:三级联动(父节点和子节点都被选中,但未加载的子节点，不选择) ]]></description>
+		</attribute>
+
+		<attribute>
+			<name>deepCascadeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[deepCascadeCheck:深度级联(包括未加载的子节点),针对子节点 ]]></description>
+		</attribute>
+
+		<attribute>
+			<name>checkOnSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[checkOnSelect.如果为true，该复选框被选中/取消选中，当用户点击某一行上。如果为false，该复选框仅检查/取消选中，当用户点击完全的复选框。]]></description>
+		</attribute>
+		<attribute>
+			<name>selectOnCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnCheck.设置为true，单击一个复选框，将始终选择行。如果为false，不会选择行选中该复选框。]]></description>
+		</attribute>
+		<attribute>
+			<name>pageNumber</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageNumber. 当前页数]]></description>
+		</attribute>
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageSize.每页显示条数]]></description>
+		</attribute>
+		<attribute>
+			<name>pageList</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[pageList.分页页数下拉显示数,10,20,30,40,50]]></description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[name. 表格JS 对象,在JSP页面使用该名字调用表格方法]]></description>
+		</attribute>
+		<attribute>
+			<name>lazyLoad</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[lazyLoad. 数据是否延迟加载，只对树型列表有用]]></description>
+		</attribute>
+		<attribute>
+			<name>initData</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[initData. 是否在显示表格时初使化数据，默认为true]]></description>
+		</attribute>
+
+		<attribute>
+			<name>enableHeaderContextMenu</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[enableHeaderContextMenu. 是否开启表头列名称右键点击菜单，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>enableHeaderClickMenu</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[enableHeaderClickMenu. 是否开启表头列名称右侧那个箭头形状的鼠标左键点击菜单，默认为true]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onLoadSuccess</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onLoadSuccess. 当数据载入成功时触发。]]></description>
+		</attribute>
+		<attribute>
+			<name>onLoadError</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onLoadError. 当载入远程数据发生错误时触发。]]></description>
+		</attribute>
+		<attribute>
+			<name>onClickRow</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onClickRow. 当用户点击行时触发，参数如下：rowIndex：被点击的行索引，从0开始。rowData：对应于被点击的行的记录。]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClickRow</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onDblClickRow. 当用户双击一行时触发，参数如下：rowIndex：被点击的行索引，从0开始。rowData：对应于被点击的行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onClickCell</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onClickCell.当用户点击单元格时触发。属性列表:rowIndex, field, value]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClickCell</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onDblClickCell. 当用户双击单元格时触发。 属性列表:rowIndex, field, value]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeExpand. 节点展开之前触发,返回false将取消展开动作.参数row,行记录]]></description>
+		</attribute>
+		<attribute>
+			<name>onExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onExpand. 在节点被展开的时候触发.参数row,行记录]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeCollapse.节点折叠之前触发,返回false取消折叠动作.]]></description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onCollapse. 节点折叠后触发.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onSelect. 当用户选择一行是触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onUnselect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onUnselect. 当用户取消选择一行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onSelectAll</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onSelectAll. 当用户选择所有行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onUnselectAll</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onUnselectAll. 当用户取消选择所有行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onBeforeEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onBeforeEdit. 当用户开始编辑一行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+
+		<attribute>
+			<name>onAfterEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onAfterEdit. 当用户编辑完成时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onCancelEdit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onCancelEdit. 当用户取消编辑行时触发，参数如下：rowIndex：被选择的行索引，从0开始,rowData：对应于被选择行的记录。]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ========== 表格查询 ===== -->
+	<tag>
+		<name>gridQueryBar</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.GridQueryBarTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[GridQueryBarTag.]]></description>
+	</tag>
+
+	<!-- ========== 表格列 标签 ===== -->
+	<tag>
+		<name>column</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.ColumnTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[ColumnTag. 表格列 标签]]></description>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[title. 显示名]]></description>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[实体属性名.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>fixed</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[是否固定.]]></description>
+		</attribute>
+		<attribute>
+			<name>checkbox</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[checkbox.是否显示checkbox,默认为true]]></description>
+		</attribute>
+
+		<attribute>
+			<name>tip</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[tip. 在类显示提示，默认为false]]></description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[width.]]></description>
+		</attribute>
+		<attribute>
+			<name>rowspan</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[rowspan.表明一个单元格跨几行。]]></description>
+		</attribute>
+		<attribute>
+			<name>colspan</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[colspan.表明一个单元格跨几列。]]></description>
+		</attribute>
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[align. 表明如何对其列数据，可选值：'left'，'right'，'center'。 ]]></description>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[sortable.设置为true允许对该列排序。]]></description>
+		</attribute>
+		<attribute>
+			<name>resizable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[resizable.设置为true允许该列被缩放。]]></description>
+		</attribute>
+		<attribute>
+			<name>hidden</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[hidden.设置为true将隐藏列。]]></description>
+		</attribute>
+		<attribute>
+			<name>cell</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cell.可取值:date:日期,format:日期格式;res:从资源文件取值,format:资源key;custom:自定义函数:fomat:函数名(默认传入value, row, index)]；noprop：不是数据库属性,format:自定义函数(row,index)]]></description>
+		</attribute>
+		<attribute>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[format.]]></description>
+		</attribute>
+		<attribute>
+			<name>styler</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[styler.]]></description>
+		</attribute>
+		<attribute>
+			<name>sort</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[sort. 是否排序]]></description>
+		</attribute>
+		<attribute>
+			<name>editor</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[editor. 暂未实现]]></description>
+		</attribute>
+		<attribute>
+			<name>render</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[render. 树型列表 tree]]></description>
+		</attribute>
+
+	</tag>
+
+	<!-- ============按钮控件============== -->
+	<tag>
+		<name>action</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.ActionBarTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[ActionBarTag.]]></description>
+		<attribute>
+			<name>text</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[text. 按钮显示名称]]></description>
+		</attribute>
+		<attribute>
+			<name>iconClass</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[iconClass. icon-class]]></description>
+		</attribute>
+		<attribute>
+			<name>handle</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[handle. 事件]]></description>
+		</attribute>
+		<attribute>
+			<name>resourceKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[resourceKey.资源code，如果指定该值 ]]></description>
+		</attribute>
+		<attribute>
+			<name>btnType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[resourceKey.资源code，如果指定该值 ]]></description>
+		</attribute>
+	</tag>
+
+	<!-- ============= 自动构建按钮 ================= -->
+	<tag>
+		<name>buildActions</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.BuildActionTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[BuildActionTag. 自动生成按钮]]></description>
+		<attribute>
+			<name>create</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[create. 是否自动构建新增按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>edit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[edit.是否自动构建编辑按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>delete</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delete.是否自动构建删除按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>reload</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[reload. 是否自动构建刷新按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>expand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[expand. 是否自动构建展开按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>collapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[collapse. 是否自动构建收缩按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>save</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[save. 是否自动构建保存按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>cancel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[cancel. 是否自动构建取消按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>delete</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delete.是否自动构建删除按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[query.是否自动构建查询按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>queryAll</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[queryAll.是否自动构建 查询全部 按钮]]></description>
+		</attribute>
+
+	</tag>
+
+	<!-- ============按钮控件============== -->
+	<tag>
+		<name>pageHeader</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.grid.PageHeaderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[pageHeader.]]></description>
+	</tag>
+	<!-- ==================Grid Tag -->
+
+	<!-- ==== button tag 按钮 -->
+	<tag>
+		<name>button</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.form.ButtonTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[按钮控件.]]></description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id.按钮JS ID ]]></description>
+		</attribute>
+		<attribute>
+			<name>resourceKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[resourceKey.资源code，如果指定该值 ]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.按钮显示名 ]]></description>
+		</attribute>
+		<attribute>
+			<name>iconClass</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[caption.按钮样式类 ]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[caption.是否可用 ]]></description>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[caption.单击事件 ]]></description>
+		</attribute>
+
+	</tag>
+
+	<!-- ==================字符串值的显示转换================ -->
+	<tag>
+		<name>valueToLabel</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.ValueToLabel
+		</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[valueToLabel.]]></description>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[value.数据库原始值]]></description>
+		</attribute>
+		<attribute>
+			<name>resKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[对应资源文件Key.]]></description>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[label.值串，与resKey二者选一]]></description>
+		</attribute>
+		<attribute>
+			<name>defaultValue</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[defaultValue.默认值]]></description>
+		</attribute>
+	</tag>
+
+	<!-- 面板对象 -->
+	<tag>
+		<name>panel</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.win.PanelTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[panel 面板 ]]></description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id.面版的JS对象]]></description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[title. 显示在面版顶部的标题文本]]></description>
+		</attribute>
+		<attribute>
+			<name>iconCls</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[在面版标题前显示一个16x16大小图标的CSS类]]></description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置面版的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置面版的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>left</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置面版的顶边距]]></description>
+		</attribute>
+		<attribute>
+			<name>cls</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[对面版引用一个CSS类]]></description>
+		</attribute>
+		<attribute>
+			<name>headerCls</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[对面版头部引用一个CSS类]]></description>
+		</attribute>
+		<attribute>
+			<name>bodyCls</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[对面版主体引用一个CSS类]]></description>
+		</attribute>
+		<attribute>
+			<name>fit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置为true时，面版的大小将铺满它所在的容器（浏览器）]]></description>
+		</attribute>
+		<attribute>
+			<name>border</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义是否显示控制面板边框]]></description>
+		</attribute>
+		<attribute>
+			<name>doSize</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[如果设置为true，在控制面板被创建时将被重置大小并且自动布局]]></description>
+		</attribute>
+		<attribute>
+			<name>noheader</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[如果设置为true，控制面板头部将不被创建]]></description>
+		</attribute>
+		<attribute>
+			<name>content</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[面版主体的内容]]></description>
+		</attribute>
+
+		<attribute>
+			<name>minimizable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义是否显示最小化按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>maximizable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义是否显示最大化按钮]]></description>
+		</attribute>
+		<attribute>
+			<name>collapsed</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义控制面板初始化时是否折叠]]></description>
+		</attribute>
+		<attribute>
+			<name>minimized</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义控制面板初始化时是否最小化]]></description>
+		</attribute>
+		<attribute>
+			<name>maximized</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义控制面板初始化时是否最大化]]></description>
+		</attribute>
+		<attribute>
+			<name>closed</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[定义控制面板初始化时是否关闭]]></description>
+		</attribute>
+		<attribute>
+			<name>closable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[是否可关闭]]></description>
+		</attribute>
+		<attribute>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[一个URL加载远程数据,然后显示在面板。注意,内容将不会被加载到面板是开放和扩大]]></description>
+		</attribute>
+		<attribute>
+			<name>cache</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[如果设置为true，从超链接载入的数据将被缓存]]></description>
+		</attribute>
+		<attribute>
+			<name>loadingMessage</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[数据加载中]]></description>
+		</attribute>
+		<attribute>
+			<name>extractor</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[选择器，Fun,对加载过来的页面进行过滤]]></description>
+		</attribute>
+
+	</tag>
+
+	<!-- 选项卡标签 -->
+	<tag>
+		<name>tabs</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.win.TabsTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[tabs 选项卡 ]]></description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[id.tabs的JS对象]]></description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[width. 选项卡所在容器（控制面板）的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[width. 选项卡所在容器（控制面板）的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[如果设置为true，将不显示控制面板背景]]></description>
+		</attribute>
+		<attribute>
+			<name>fit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置为true时，选项卡的大小将铺满它所在的容器（浏览器）]]></description>
+		</attribute>
+		<attribute>
+			<name>border</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[如果设置true，将显示选项卡所在容器（面板）的边框]]></description>
+		</attribute>
+		<attribute>
+			<name>scrollIncrement</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[选项卡滚动条每次滚动的像素值]]></description>
+		</attribute>
+		<attribute>
+			<name>scrollDuration</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[每次滚动持续的时间，单位为毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>onLoad</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当一个选项卡完成ajax远程载入对象时触发。 panel]]></description>
+		</attribute>
+		<attribute>
+			<name>onSelect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当用户选择一个选项卡时触发 title,index]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeClose</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[在一个选项卡被关闭之前触发，返回false将取消关闭]]></description>
+		</attribute>
+		<attribute>
+			<name>onClose</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[title,index 在用户关闭一个选项卡面板后触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onAdd</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[ title,index 在一个选项卡面板被添加后触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onUpdate</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[title,index 在一个选项卡面板被更新后触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onContextMenu</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[e, title,index 在一个选项卡面板被鼠标右键单击后触发]]></description>
+		</attribute>
+	</tag>
+
+
+	<!-- 树标签 -->
+	<tag>
+		<name>tree</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.tree.TreeTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[树标签]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tree的JS对象]]></description>
+		</attribute>
+		<attribute>
+			<name>dataUrl</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[数据获取URL]]></description>
+		</attribute>
+
+		<attribute>
+			<name>lazyLoad</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否使用异步加载数据,默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[异步加载时需要自动提交父节点属性的参数, lazyLoad为true时生效 多个用,号隔开]]></description>
+		</attribute>
+
+		<attribute>
+			<name>otherParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[其他参数，例如{"status":"1"}]]></description>
+		</attribute>
+
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可编辑]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectedMulti</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可行多选，不同于check.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>dataFilter</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[数据加载完成（未渲染之前调用，用于对数据进行预处理)]]></description>
+		</attribute>
+
+		<attribute>
+			<name>nodeStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[节点展示样式，可选值 default,checkbox,radio]]></description>
+		</attribute>
+
+		<attribute>
+			<name>radioType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[radio 的分组范围。nodeStyle=radio 时生效,默认值："level",可选值 all]]></description>
+		</attribute>
+
+		<attribute>
+			<name>cascadeCheckParent</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择父节点，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>cascadeCheckChilds</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择子节点，默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoCheckTrigger</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置自动关联勾选时是否触发 beforeCheck / onCheck 事件回调函数。nodeStyle="check" 时生效]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeAsync</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 勾选 或 取消勾选 之前的事件回调函数，并且根据返回值确定是否允许 勾选 或 取消勾选 用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获单击节点之前的事件回调函数，并且根据返回值确定是否允许单击操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点折叠之前的事件回调函数，并且根据返回值确定是否允许折叠操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之前的事件回调函数，并且根据返回值确定触发 onDblClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDragOpen</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获拖拽节点移动到折叠状态的父节点后，即将自动展开该父节点之前的事件回调函数，并且根据返回值确定是否允许自动展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeEditName</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑按钮的 click 事件，并且根据返回值确定是否允许进入名称编辑状态]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下之前的事件回调函数，并且根据返回值确定触发 onMouseDown 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键松开之前的事件回调函数，并且根据返回值确定触发 onMouseUp 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncError</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载出现异常错误的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncSuccess</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载正常结束的事件回调函数 ]]></description>
+		</attribute>
+		<attribute>
+			<name>onCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被点击的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被折叠的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDragMove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被展开的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 用于捕获 zTree 上鼠标按键松开后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onNodeCreated</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点生成 DOM 后的事件回调函数 v3.x]]></description>
+		</attribute>
+		<attribute>
+			<name>onRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[ 用于捕获删除节点之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之后的事件回调函数]]></description>
+		</attribute>
+
+	</tag>
+
+
+	<!-- 树标签 -->
+	<tag>
+		<name>rdsTree</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.tree.RdsTreeTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[树标签]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tree的JS对象]]></description>
+		</attribute>
+
+		<attribute>
+			<name>dataProvider</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service
+				Bean Id
+			</description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				conditions.查询条件
+				conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式
+			</description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID
+			</description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>导出实体属性,默认为*,代表导出实体普通属性</description>
+		</attribute>
+
+
+		<attribute>
+			<name>dataUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[数据获取URL]]></description>
+		</attribute>
+
+		<attribute>
+			<name>lazyLoad</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否使用异步加载数据,默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[异步加载时需要自动提交父节点属性的参数, lazyLoad为true时生效 多个用,号隔开]]></description>
+		</attribute>
+
+		<attribute>
+			<name>otherParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[其他参数，例如{"status":"1"}]]></description>
+		</attribute>
+
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可编辑]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectedMulti</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可行多选，不同于check.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>dataFilter</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[数据加载完成（未渲染之前调用，用于对数据进行预处理)]]></description>
+		</attribute>
+
+		<attribute>
+			<name>nodeStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[节点展示样式，可选值 default,checkbox,radio]]></description>
+		</attribute>
+
+		<attribute>
+			<name>radioType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[radio 的分组范围。nodeStyle=radio 时生效,默认值："level",可选值 all]]></description>
+		</attribute>
+
+		<attribute>
+			<name>cascadeCheckParent</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择父节点，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>cascadeCheckChilds</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择子节点，默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoCheckTrigger</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置自动关联勾选时是否触发 beforeCheck / onCheck 事件回调函数。nodeStyle="check" 时生效]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeAsync</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 勾选 或 取消勾选 之前的事件回调函数，并且根据返回值确定是否允许 勾选 或 取消勾选 用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获单击节点之前的事件回调函数，并且根据返回值确定是否允许单击操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点折叠之前的事件回调函数，并且根据返回值确定是否允许折叠操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之前的事件回调函数，并且根据返回值确定触发 onDblClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDragOpen</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获拖拽节点移动到折叠状态的父节点后，即将自动展开该父节点之前的事件回调函数，并且根据返回值确定是否允许自动展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeEditName</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑按钮的 click 事件，并且根据返回值确定是否允许进入名称编辑状态]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下之前的事件回调函数，并且根据返回值确定触发 onMouseDown 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键松开之前的事件回调函数，并且根据返回值确定触发 onMouseUp 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncError</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载出现异常错误的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncSuccess</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载正常结束的事件回调函数 ]]></description>
+		</attribute>
+		<attribute>
+			<name>onCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被点击的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被折叠的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDragMove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被展开的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 用于捕获 zTree 上鼠标按键松开后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onNodeCreated</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点生成 DOM 后的事件回调函数 v3.x]]></description>
+		</attribute>
+		<attribute>
+			<name>onRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[ 用于捕获删除节点之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之后的事件回调函数]]></description>
+		</attribute>
+	</tag>
+
+
+
+	<!-- 组合树标签 -->
+	<tag>
+		<name>comBoxTree</name>
+		<tag-class>
+			persistent.prestige.platform.rds.taglib.tree.ComBoxTreeTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description><![CDATA[树标签]]></description>
+		<attribute>
+			<name>inputName</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[inputName. 字段名称，用于表单接受参数值]]></description>
+		</attribute>
+
+		<attribute>
+			<name>listText</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listText. 相当与下列选项的text]]></description>
+		</attribute>
+		<attribute>
+			<name>listValue</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[listValue. 相当与下列选项的value]]></description>
+		</attribute>
+
+		<attribute>
+			<name>comboxWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxWidth. 组件的宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxHeight. 组件的高度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelWidth</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelWidth. 下拉面板宽度]]></description>
+		</attribute>
+		<attribute>
+			<name>comboxPanelHeight</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[comboxPanelHeight. 下拉面板高度]]></description>
+		</attribute>
+		<attribute>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[multiple. 是否可以多选]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectOnNavigation</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[selectOnNavigation. 定义是否允许使用键盘导航来选择项目]]></description>
+		</attribute>
+		<attribute>
+			<name>separator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[separator. 在多选的时候使用何种分隔符进行分割 默认为,]]></description>
+		</attribute>
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[editable. 定义用户是否可以直接输入文本到字段中]]></description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[disabled. 设置启用/禁用字段]]></description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[readonly. 设置该字段为读写/只读模式]]></description>
+		</attribute>
+		<attribute>
+			<name>panelAlign</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[panelAlign. 面板对齐方式。可用值有：'left','right']]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[value. 组建默认值]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[delay. 最后一次输入事件与执行搜索之间的延迟间隔（执行自动完成功能的延迟间隔）]]></description>
+		</attribute>
+		<attribute>
+			<name>onShowPanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onShowPanel. 当下拉面板显示的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onHidePanel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onHidePanel. 当下拉面板隐藏的时候触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onChange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[onChange. 当字段值改变的时候触发]]></description>
+		</attribute>
+
+		<!-- 验证相关 -->
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[required.是否必填]]></description>
+		</attribute>
+		<attribute>
+			<name>validType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[validType.定义字段验证类型，比如：email, url等等]]></description>
+		</attribute>
+		<attribute>
+			<name>delay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[delay.延迟到最后验证输入值,默认200毫秒]]></description>
+		</attribute>
+		<attribute>
+			<name>missingMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[missingMessage.当文本框未填写时出现的提示信息]]></description>
+		</attribute>
+		<attribute>
+			<name>invalidMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[invalidMessage.当文本框的内容被验证为无效时出现的提示]]></description>
+		</attribute>
+		<attribute>
+			<name>tipPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tipPosition.定义当文本框内容无效的时候提示消息显示的位置,默认right,可选left]]></description>
+		</attribute>
+		<attribute>
+			<name>deltaX</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[deltaX.提示框在水平方向上位移.默认为0]]></description>
+		</attribute>
+		<attribute>
+			<name>novalidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[novalidate.为true时关闭验证功能]]></description>
+		</attribute>
+		<attribute>
+			<name>onBeforeValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onBeforeValidate.在验证一个字段之前触发]]></description>
+		</attribute>
+		<attribute>
+			<name>onValidate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[onValidate.在验证一个字段的时候触发]]></description>
+		</attribute>
+		<!-- 验证相关结束-->
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[tree的JS对象]]></description>
+		</attribute>
+
+		<attribute>
+			<name>dataProvider</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				dataProvider. 数据提供者，可以是Model实体类，也可以是受Spring管理的Service
+				Bean Id
+			</description>
+		</attribute>
+		<attribute>
+			<name>conditions</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				conditions.查询条件
+				conditions="qf_name:dfd,qf_ps:1",其中qf_表示查询,qp_查询模式,qs_排序模式
+			</description>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				query.查询接口，可以是全类名，亦可以是受Spring 管理的 Bean ID
+			</description>
+		</attribute>
+		<attribute>
+			<name>extrProps</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>导出实体属性,默认为*,代表导出实体普通属性</description>
+		</attribute>
+
+
+		<attribute>
+			<name>dataUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[数据获取URL]]></description>
+		</attribute>
+
+		<attribute>
+			<name>lazyLoad</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否使用异步加载数据,默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[异步加载时需要自动提交父节点属性的参数, lazyLoad为true时生效 多个用,号隔开]]></description>
+		</attribute>
+
+		<attribute>
+			<name>otherParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[其他参数，例如{"status":"1"}]]></description>
+		</attribute>
+
+		<attribute>
+			<name>editable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可编辑]]></description>
+		</attribute>
+
+		<attribute>
+			<name>selectedMulti</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[是否可行多选，不同于check.]]></description>
+		</attribute>
+
+		<attribute>
+			<name>dataFilter</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[数据加载完成（未渲染之前调用，用于对数据进行预处理)]]></description>
+		</attribute>
+
+		<attribute>
+			<name>nodeStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[节点展示样式，可选值 default,checkbox,radio]]></description>
+		</attribute>
+
+		<attribute>
+			<name>radioType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[radio 的分组范围。nodeStyle=radio 时生效,默认值："level",可选值 all]]></description>
+		</attribute>
+
+		<attribute>
+			<name>cascadeCheckParent</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择父节点，默认为true]]></description>
+		</attribute>
+		<attribute>
+			<name>cascadeCheckChilds</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[当nodeStyle=checkbox时生效，选中子节点是否级联选择子节点，默认为false]]></description>
+		</attribute>
+
+		<attribute>
+			<name>autoCheckTrigger</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[设置自动关联勾选时是否触发 beforeCheck / onCheck 事件回调函数。nodeStyle="check" 时生效]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeAsync</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 勾选 或 取消勾选 之前的事件回调函数，并且根据返回值确定是否允许 勾选 或 取消勾选 用于捕获异步加载之前的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获单击节点之前的事件回调函数，并且根据返回值确定是否允许单击操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点折叠之前的事件回调函数，并且根据返回值确定是否允许折叠操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之前的事件回调函数，并且根据返回值确定触发 onDblClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDragOpen</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获拖拽节点移动到折叠状态的父节点后，即将自动展开该父节点之前的事件回调函数，并且根据返回值确定是否允许自动展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeEditName</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑按钮的 click 事件，并且根据返回值确定是否允许进入名称编辑状态]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获父节点展开之前的事件回调函数，并且根据返回值确定是否允许展开操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下之前的事件回调函数，并且根据返回值确定触发 onMouseDown 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键松开之前的事件回调函数，并且根据返回值确定触发 onMouseUp 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束]]></description>
+		</attribute>
+		<attribute>
+			<name>beforeRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncError</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载出现异常错误的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onAsyncSuccess</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获异步加载正常结束的事件回调函数 ]]></description>
+		</attribute>
+		<attribute>
+			<name>onCheck</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被点击的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onCollapse</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被折叠的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDblClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标双击之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDragMove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onDrop</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被拖拽的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onExpand</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点被展开的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseDown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标按键按下后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onMouseUp</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 用于捕获 zTree 上鼠标按键松开后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onNodeCreated</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点生成 DOM 后的事件回调函数 v3.x]]></description>
+		</attribute>
+		<attribute>
+			<name>onRemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[ 用于捕获删除节点之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRename</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获节点编辑名称结束之后的事件回调函数]]></description>
+		</attribute>
+		<attribute>
+			<name>onRightClick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[用于捕获 zTree 上鼠标右键点击之后的事件回调函数]]></description>
+		</attribute>
+	</tag>
+
+	<!-- =========自动引入JS CSS -->
+	<tag>
+		<name>htmlEditor</name>
+		<tag-class>
+			persistent.prestige.platform.taglib.html.HtmlEditorTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>Html在线编辑器</description>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>id,必须，唯一标识一个Html editor</description>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>name,必须，html editor对象，可在JS中直接引用</description>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>高度</description>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>宽度</description>
+		</attribute>
+
+	</tag>
+
+
+	<!-- =========文件上传标签  -->
+	<tag>
+		<name>upload</name>
+		<tag-class>
+			persistent.prestige.module.upload.taglib.FileUploadTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>文件上传标签</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>文件上传组件JS对象名称</description>
+		</attribute>
+
+		<attribute>
+			<name>fileDivId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>文件标签容器ID</description>
+		</attribute>
+
+	</tag>
+
+</taglib>

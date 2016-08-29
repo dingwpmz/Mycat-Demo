@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.eshop.dao.OrderItemDao" >
+  
+  <!-- 查询的列  start  -->
+  <sql id="base_columns" >
+  		a.id,
+  		a.order_id as orderId,
+  		a.goods_id as goodsId,
+  		a.price,
+  		a.num,
+  		a.total_price as totalPrice,
+  		a.create_time as createTime,
+  		a.buy_uid as buyUid
+  </sql>
+  
+  <sql id="all_columns" >
+   <include refid="base_columns" />
+  </sql>
+  <!-- 查询的列  end  -->
+  
+  <!-- 分页  start  -->
+  <sql id = "page">
+  	<if test="start != null and end != null and start >= 0 and end >= 0 ">
+  		limit #{start},#{end}
+  	</if>
+  </sql>
+  <!-- 分页  end  -->
+  
+  <!-- 查询条件 start -->
+  <sql id="comm_where">
+  	1=1
+  		<if test="id != null and id != '' ">
+	  		and a.id = #{id}
+	  	</if>
+  		<if test="orderId != null and orderId != '' ">
+	  		and a.order_id = #{orderId}
+	  	</if>
+  		<if test="goodsId != null and goodsId != '' ">
+	  		and a.goods_id = #{goodsId}
+	  	</if>
+  		<if test="price != null and price != '' ">
+	  		and a.price = #{price}
+	  	</if>
+  		<if test="num != null and num != '' ">
+	  		and a.num = #{num}
+	  	</if>
+  		<if test="totalPrice != null and totalPrice != '' ">
+	  		and a.total_price = #{totalPrice}
+	  	</if>
+  		<if test="createTime != null and createTime != '' ">
+	  		and a.create_time = #{createTime}
+	  	</if>
+  </sql>
+  <!-- 查询条件 end  -->
+  
+  <!-- 实体通用方法  start  -->
+  <select id="find" resultType="persistent.prestige.modules.eshop.model.OrderItem" parameterType="java.lang.Integer" >
+    select 
+    <include refid="all_columns" />
+    from es_order_item a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByIds" resultType="persistent.prestige.modules.eshop.model.OrderItem">
+  	 select 
+     <include refid="all_columns" />
+     from es_order_item a
+     where a.id in 
+     <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+     </foreach>
+  </select>
+  
+  
+  <select id="query" resultType="persistent.prestige.modules.eshop.model.OrderItem" parameterType="java.util.Map" >
+  	select 
+  	<include refid="all_columns"></include>
+  	from es_order_item a
+  	<where>
+  		<include refid="comm_where"></include>
+  		<include refid="page"></include>
+  	</where>
+  	
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long">
+  	select count(*) from es_order_item
+  </select>
+  
+  <select id="count" resultType="java.lang.Long">
+  	select count(*) from es_order_item a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	delete a from es_order_item a where a.id = #{id}
+  </delete>
+  
+  <delete id="delete" parameterType="java.util.Map">
+  	delete a from es_order_item a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </delete>
+  
+  <!-- 实体通用方法  end  -->
+  
+  <!-- 修改 start -->
+  <update id="update" parameterType="persistent.prestige.modules.eshop.model.OrderItem" >
+  	update es_order_item a 
+  	<set>              
+	  		<if test="orderId != null">
+		  		a.order_id = #{orderId},
+		  	</if>
+	  		<if test="goodsId != null">
+		  		a.goods_id = #{goodsId},
+		  	</if>
+	  		<if test="price != null">
+		  		a.price = #{price},
+		  	</if>
+	  		<if test="num != null">
+		  		a.num = #{num},
+		  	</if>
+	  		<if test="totalPrice != null">
+		  		a.total_price = #{totalPrice},
+		  	</if>
+	  		<if test="createTime != null">
+		  		a.create_time = #{createTime},
+		  	</if>
+    </set>
+    where a.id = #{id}
+  </update>
+  <!-- 修改 end -->
+  
+  <!-- 新增 start -->
+  <insert id="create" parameterType="persistent.prestige.modules.eshop.model.OrderItem" 
+  			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	INSERT INTO es_order_item(
+		  		order_id,
+		  		goods_id,
+		  		price,
+		  		num,
+		  		total_price,
+		  		create_time,
+		  		buy_uid
+		) VALUES (
+		  		#{orderId},
+		  		#{goodsId},
+		  		#{price},
+		  		#{num},
+		  		#{totalPrice},
+		  		#{createTime},
+		  		#{buyUid}
+		)
+	</insert>
+   <!-- 新增 end -->
+  
+</mapper>

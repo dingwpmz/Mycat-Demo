@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.eshop.dao.SellerDao" >
+  
+  <!-- 查询的列  start  -->
+  <sql id="base_columns" >
+  		a.id,
+  		a.seller_name as sellerName,
+  		a.uid,
+  		a.address,
+  		a.phone,
+  		a.status,
+  		a.create_time as createTime
+  </sql>
+  
+  <sql id="all_columns" >
+   <include refid="base_columns" />
+  </sql>
+  <!-- 查询的列  end  -->
+  
+  <!-- 分页  start  -->
+  <sql id = "page">
+  	<if test="start != null and end != null and start >= 0 and end >= 0 ">
+  		limit #{start},#{end}
+  	</if>
+  </sql>
+  <!-- 分页  end  -->
+  
+  <!-- 查询条件 start -->
+  <sql id="comm_where">
+  	1=1
+  		<if test="id != null and id != '' ">
+	  		and a.id = #{id}
+	  	</if>
+  		<if test="sellerName != null and sellerName != '' ">
+	  		and a.seller_name = #{sellerName}
+	  	</if>
+  		<if test="uid != null and uid != '' ">
+	  		and a.uid = #{uid}
+	  	</if>
+  		<if test="address != null and address != '' ">
+	  		and a.address = #{address}
+	  	</if>
+  		<if test="phone != null and phone != '' ">
+	  		and a.phone = #{phone}
+	  	</if>
+  		<if test="status != null and status != '' ">
+	  		and a.status = #{status}
+	  	</if>
+  		<if test="createTime != null and createTime != '' ">
+	  		and a.create_time = #{createTime}
+	  	</if>
+  </sql>
+  <!-- 查询条件 end  -->
+  
+  <!-- 实体通用方法  start  -->
+  <select id="find" resultType="persistent.prestige.modules.eshop.model.Seller" parameterType="java.lang.Integer" >
+    select 
+    <include refid="all_columns" />
+    from es_seller a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByIds" resultType="persistent.prestige.modules.eshop.model.Seller">
+  	 select 
+     <include refid="all_columns" />
+     from es_seller a
+     where a.id in 
+     <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+     </foreach>
+  </select>
+  
+  
+  <select id="query" resultType="persistent.prestige.modules.eshop.model.Seller" parameterType="java.util.Map" >
+  	select 
+  	<include refid="all_columns"></include>
+  	from es_seller a
+  	<where>
+  		<include refid="comm_where"></include>
+  		<include refid="page"></include>
+  	</where>
+  	
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long">
+  	select count(*) from es_seller
+  </select>
+  
+  <select id="count" resultType="java.lang.Long">
+  	select count(*) from es_seller a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	delete a from es_seller a where a.id = #{id}
+  </delete>
+  
+  <delete id="delete" parameterType="java.util.Map">
+  	delete a from es_seller a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </delete>
+  
+  <!-- 实体通用方法  end  -->
+  
+  <!-- 修改 start -->
+  <update id="update" parameterType="persistent.prestige.modules.eshop.model.Seller" >
+  	update es_seller a 
+  	<set>              
+	  		<if test="sellerName != null">
+		  		a.seller_name = #{sellerName},
+		  	</if>
+	  		<if test="uid != null">
+		  		a.uid = #{uid},
+		  	</if>
+	  		<if test="address != null">
+		  		a.address = #{address},
+		  	</if>
+	  		<if test="phone != null">
+		  		a.phone = #{phone},
+		  	</if>
+	  		<if test="status != null">
+		  		a.status = #{status},
+		  	</if>
+	  		<if test="createTime != null">
+		  		a.create_time = #{createTime},
+		  	</if>
+    </set>
+    where a.id = #{id}
+  </update>
+  <!-- 修改 end -->
+  
+  <!-- 新增 start -->
+  <insert id="create" parameterType="persistent.prestige.modules.eshop.model.Seller" 
+  			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	INSERT INTO es_seller(
+		  		seller_name,
+		  		uid,
+		  		address,
+		  		phone,
+		  		status,
+		  		create_time
+		) VALUES (
+		  		#{sellerName},
+		  		#{uid},
+		  		#{address},
+		  		#{phone},
+		  		#{status},
+		  		#{createTime}
+		)
+	</insert>
+   <!-- 新增 end -->
+  
+</mapper>

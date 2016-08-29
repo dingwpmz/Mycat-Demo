@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>ums</short-name>
+	<uri>/ums-tags</uri>
+	<display-name>"用户模块自定义标签"</display-name>
+
+
+	<!-- =========自动引入JS CSS  -->
+	<tag>
+		<name>menu</name>
+		<tag-class>
+			persistent.prestige.module.ums.taglib.MenuTag
+		</tag-class>
+		<body-content>empty</body-content>
+		<description>生成用户权限功能树</description>
+		<attribute>
+			<name>userId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>用户ID</description>
+		</attribute>
+	</tag>
+
+</taglib>
