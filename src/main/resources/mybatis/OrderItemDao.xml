@@ -7,6 +7,7 @@
   		a.id,
   		a.order_id as orderId,
   		a.goods_id as goodsId,
+  		a.sku_id as skuId,
   		a.price,
   		a.num,
   		a.total_price as totalPrice,
@@ -33,21 +34,16 @@
   		<if test="id != null and id != '' ">
 	  		and a.id = #{id}
 	  	</if>
-  		<if test="orderId != null and orderId != '' ">
+  		<if test="orderId != null and orderId > -1 ">
 	  		and a.order_id = #{orderId}
 	  	</if>
-  		<if test="goodsId != null and goodsId != '' ">
+	  	<if test="skuId != null and skuId > -1 ">
+	  		and a.sku_id = #{skuId}
+	  	</if>
+  		<if test="goodsId != null and goodsId >-1 ">
 	  		and a.goods_id = #{goodsId}
 	  	</if>
-  		<if test="price != null and price != '' ">
-	  		and a.price = #{price}
-	  	</if>
-  		<if test="num != null and num != '' ">
-	  		and a.num = #{num}
-	  	</if>
-  		<if test="totalPrice != null and totalPrice != '' ">
-	  		and a.total_price = #{totalPrice}
-	  	</if>
+  		
   		<if test="createTime != null and createTime != '' ">
 	  		and a.create_time = #{createTime}
 	  	</if>
@@ -141,6 +137,7 @@
   	INSERT INTO es_order_item(
 		  		order_id,
 		  		goods_id,
+		  		sku_id,
 		  		price,
 		  		num,
 		  		total_price,
@@ -149,6 +146,7 @@
 		) VALUES (
 		  		#{orderId},
 		  		#{goodsId},
+		  		#{skuId},
 		  		#{price},
 		  		#{num},
 		  		#{totalPrice},

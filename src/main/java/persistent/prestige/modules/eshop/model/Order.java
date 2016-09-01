@@ -27,7 +27,7 @@ public class Order extends AuditableModel{
 	private java.lang.String sellerUid;	
 	/**总金额，单位分*/
 	private java.lang.Long totalPrice;	
-	/**0:禁用;1:启用*/
+	/**0:新建;1:支付成功;2:支付失败*/
 	private Integer status;	
 	//columns END
 	

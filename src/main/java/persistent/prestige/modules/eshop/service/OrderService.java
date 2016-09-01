@@ -8,6 +8,7 @@ package persistent.prestige.modules.eshop.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,12 @@ public interface OrderService {
 	
 	List<OrderVo> findVos(@Param("buyUid") String buyUid,
 			@Param("start") Integer start, @Param("end") Integer end);
+	
+	
+	/**
+	 * 创建订单
+	 * @param params
+	 * @return
+	 */
+	Map saveCreateOrder(Map params);
 }

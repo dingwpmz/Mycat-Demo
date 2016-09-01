@@ -40,6 +40,21 @@ public class OrderControl {
 	private UserDao userDao;
 	
 	
+	/**
+	 * 创建订单
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping
+	@ResponseBody
+	public Map createOrder(Map params) {
+		Map result = new HashMap();
+		
+		
+		return result; 
+	}
+	
+	
 	@RequestMapping("/orders")
 	@ResponseBody
 	public Map orders(Map datas) {

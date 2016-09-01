@@ -22,7 +22,10 @@ public class OrderItem extends AuditableModel{
 	/**订单ID*/
 	private java.lang.Integer orderId;	
 	/**商品id*/
-	private java.lang.Integer goodsId;	
+	private java.lang.Integer goodsId;
+	
+	private Integer skuId;
+	
 	/**商品单价*/
 	private java.lang.Long price;	
 	/**购买数量*/
@@ -34,6 +37,15 @@ public class OrderItem extends AuditableModel{
 	private String buyUid;
 	
 
+	
+
+	public Integer getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(Integer skuId) {
+		this.skuId = skuId;
+	}
 
 	public java.lang.Integer getOrderId() {
 		return this.orderId;

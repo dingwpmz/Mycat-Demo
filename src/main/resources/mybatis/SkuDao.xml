@@ -137,4 +137,9 @@
 	</insert>
    <!-- 新增 end -->
   
+  
+  <update id = "updateSkuStoreCount">
+  	update es_sku_item a set a.store_count = a.store_count - #{num} where a.id=#{skuId} and a.store_count >= #{num}
+  </update>
+  
 </mapper>

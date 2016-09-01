@@ -6,6 +6,7 @@
 
 package persistent.prestige.modules.eshop.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import persistent.prestige.modules.eshop.model.Sku;
@@ -20,6 +21,14 @@ import persistent.prestige.platform.base.dao.Dao;
 @Repository("skuDao")
 @MybatisScan
 public interface SkuDao extends Dao<Sku,java.lang.Integer>{
+	
+	/**
+	 * 更新库存
+	 * @param skuId
+	 * @param num
+	 * @return
+	 */
+	Integer updateSkuStoreCount(@Param("skuId") Integer skuId, @Param("num") Integer num);
 	
 
 }
