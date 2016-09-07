@@ -43,6 +43,15 @@ public class OrderServiceImpl implements OrderService{
 	
 
 	@Override
+	public Map saveTest() {
+		Order order = orderDao.find(10480);
+		System.out.println("查询的order信息:" + order);
+		
+		return new HashMap();
+	}
+
+
+	@Override
 	public Map saveCreateOrder(Map params) {
 		
 		Map result = new HashMap();
@@ -51,6 +60,8 @@ public class OrderServiceImpl implements OrderService{
 			Integer num = (Integer)params.get("num");
 			
 			Integer flag = skuDao.updateSkuStoreCount(skuId, num);
+			
+			System.out.println("是否可以更新");
 			if(flag != null && flag.intValue() > 0) { //可以购买
 				String uid = (String)params.get("uid");
 				

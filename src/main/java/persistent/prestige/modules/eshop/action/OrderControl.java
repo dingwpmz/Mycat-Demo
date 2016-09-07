@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import persistent.prestige.modules.common.tenant.TenantContextHolder;
 import persistent.prestige.modules.eshop.model.Order;
 import persistent.prestige.modules.eshop.model.OrderItem;
 import persistent.prestige.modules.eshop.model.OrderVo;
@@ -45,13 +46,17 @@ public class OrderControl {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping
+	@RequestMapping("createOrder")
 	@ResponseBody
 	public Map createOrder(Map params) {
+		
 		Map result = new HashMap();
 		
-		
+		orderService.saveTest();
+		result.put("code", 0);
+		result.put("msg", "test");
 		return result; 
+		
 	}
 	
 	

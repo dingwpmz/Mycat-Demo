@@ -39,4 +39,6 @@ public interface OrderService {
 	 * @return
 	 */
 	Map saveCreateOrder(Map params);
+	
+	Map saveTest();
 }

@@ -54,8 +54,13 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 				<value>classpath*:mybatis/**/*Dao.xml</value>
 			</list>
 		</property>
-		<!-- <property name="typeAliasesPackage" value="org.agile.apipl.common.dao.handler" 
-			/> -->
+
+		<property name="plugins">
+			<array>
+				<bean id="tenantInterceptor" class="persistent.prestige.platform.mybatis.Interceptor.TenantInterceptor" />
+			</array>
+		</property>
+		
 	</bean>
 
 	<!-- 扫描basePackage下所有以@MybatisScan注解的接口 -->
@@ -77,6 +82,10 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 	</bean>
 
 
+
+	
+
+
 	<!-- 配置事务控制 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
@@ -93,27 +102,33 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 			<tx:method name="create*" propagation="REQUIRED" read-only="false" />
 			<tx:method name="update*" propagation="REQUIRED" read-only="false" />
 			<tx:method name="delete*" propagation="REQUIRED" read-only="false" />
-			<tx:method name="afterThrowing" propagation="REQUIRES_NEW" read-only="false" />
+			<tx:method name="afterThrowing" propagation="REQUIRES_NEW"
+				read-only="false" />
 
-			<!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到 
-			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="count*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
-			
-			<tx:method name="*" read-only="true" />
-			-->
+			<!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到 <tx:method name="get*" 
+				propagation="REQUIRED" read-only="true" /> <tx:method name="count*" propagation="REQUIRED" 
+				read-only="true" /> <tx:method name="find*" propagation="REQUIRED" read-only="true" 
+				/> <tx:method name="list*" propagation="REQUIRED" read-only="true" /> <tx:method 
+				name="query*" propagation="REQUIRED" read-only="true" /> <tx:method name="*" 
+				read-only="true" /> -->
 		</tx:attributes>
 	</tx:advice>
+	
+	
+	<bean id = "tenantControlInteceper" class = "persistent.prestige.modules.common.tenant.TenantControlInteceper"></bean>
 
 
 	<!-- 那些类的哪些方法参与事务 多个事务切面配置 -->
 	<aop:config expose-proxy="true">
 		<aop:pointcut id="allManagerMethod"
 			expression="execution(* persistent.prestige..*.*Service*.*(..))" />
+		
+		<aop:pointcut expression="execution(* persistent.prestige..*.*Control*.*(..))" id="controll_pointcut"/>
+		
 		<aop:advisor pointcut-ref="allManagerMethod" advice-ref="txAdvice" />
+		<aop:advisor advice-ref="tenantControlInteceper" pointcut-ref="controll_pointcut"/>
+		
 	</aop:config>
-	
+
 
 </beans>
