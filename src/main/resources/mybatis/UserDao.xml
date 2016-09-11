@@ -154,5 +154,11 @@
 		)
 	</insert>
    <!-- 新增 end -->
+   
+   <select id = "findAccTest" resultType="persistent.prestige.modules.passport.model.AccTest">
+       select a.id,a.name from TESTDB.acc_test a
+           union
+       select b.id,b.name from TESTDB2.acc_test b
+   </select>
   
 </mapper>

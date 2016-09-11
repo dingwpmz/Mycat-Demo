@@ -41,16 +41,24 @@ public class UserControl{
 	public Map saveUser(Map params) {
 		HashMap result = new HashMap();
 		try {
-			for(int i =200; i < 500; i ++ ) {
-				User u = new User();
-				u.setCreateTime(new Date(System.currentTimeMillis()));
-				u.setUid(UUidUtils.uuid());
-				u.setName("test" + i);
-				u.setEmail(u.getName()+"@163.com");
-	            u.setPhone("18620800" + i);
-	            u.setStatus(1);
-	            userService.saveUser(u);
-			}
+//			for(int i =200; i < 500; i ++ ) {
+//				User u = new User();
+//				u.setCreateTime(new Date(System.currentTimeMillis()));
+//				u.setUid(UUidUtils.uuid());
+//				u.setName("test" + i);
+//				u.setEmail(u.getName()+"@163.com");
+//	            u.setPhone("18620800" + i);
+//	            u.setStatus(1);
+//	            userService.saveUser(u);
+//			}
+			
+			
+		//	userService.saveTest();
+			
+			userService.listTest();
+			
+			
+			
 			result.put("code", 0);
 		} catch (Exception e) {
 			// TODO: handle exception

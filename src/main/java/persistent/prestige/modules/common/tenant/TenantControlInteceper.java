@@ -1,23 +1,24 @@
 package persistent.prestige.modules.common.tenant;
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-
-/**
- * 控制器层拦截器
- * @author Administrator
- *
- */
+import org.springframework.beans.factory.annotation.Autowired;
+import persistent.prestige.modules.edu.service.UserSchemeService;
 public class TenantControlInteceper implements MethodInterceptor {
-
+	@Autowired
+	private UserSchemeService userScemeService;
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		try {
+			if("login".equals(invocation.getMethod().getName())) {
+				return invocation.proceed();
+			}
+			
 			System.out.println("控制器层面，，计算 tenant。。。");
-			//从登陆信息中获取 当前用户的 tenant
-			// invocation.getArguments();
-			//最好能从登陆名，根据某种算法，判断出该数据库属于哪个 逻辑库
-			String tenant = "TESTDB";
+			Object[] args = invocation.getArguments();
+			String tenant = "";
+			if( args != null && args.length > 0) {
+				tenant = (String)args[0];
+			}
 			TenantContextHolder.setTenant(tenant);
 			return invocation.proceed();
 		}finally {

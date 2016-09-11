@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.edu.dao.TeacherUserDao" >
+  
+  <!-- 查询的列  start  -->
+  <sql id="base_columns" >
+  		a.id,
+  		a.account,
+  		a.password,
+  		a.username,
+  		a.sex,
+  		a.del_flag
+  </sql>
+  
+  <sql id="all_columns" >
+   <include refid="base_columns" />
+  </sql>
+  <!-- 查询的列  end  -->
+  
+  <!-- 分页  start  -->
+  <sql id = "page">
+  	<if test="start != null and end != null and start >= 0 and end >= 0 ">
+  		limit #{start},#{end}
+  	</if>
+  </sql>
+  <!-- 分页  end  -->
+  
+  <!-- 查询条件 start -->
+  <sql id="comm_where">
+  	1=1
+  		<if test="id != null and id != '' ">
+	  		and a.id = #{id}
+	  	</if>
+  		<if test="account != null and account != '' ">
+	  		and a.account = #{account}
+	  	</if>
+  		<if test="password != null and password != '' ">
+	  		and a.password = #{password}
+	  	</if>
+  		<if test="username != null and username != '' ">
+	  		and a.username = #{username}
+	  	</if>
+  		<if test="sex != null and sex != '' ">
+	  		and a.sex = #{sex}
+	  	</if>
+  		<if test="delFlag != null and delFlag != '' ">
+	  		and a.del_flag = #{delFlag}
+	  	</if>
+  </sql>
+  <!-- 查询条件 end  -->
+  
+  <!-- 实体通用方法  start  -->
+  <select id="find" resultType="persistent.prestige.modules.edu.model.TeacherUser" parameterType="java.lang.Integer" >
+    select 
+    <include refid="all_columns" />
+    from teacher_user a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByIds" resultType="persistent.prestige.modules.edu.model.TeacherUser">
+  	 select 
+     <include refid="all_columns" />
+     from teacher_user a
+     where a.id in 
+     <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+     </foreach>
+  </select>
+  
+  
+  <select id="query" resultType="persistent.prestige.modules.edu.model.TeacherUser" parameterType="java.util.Map" >
+  	select 
+  	<include refid="all_columns"></include>
+  	from teacher_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  		<include refid="page"></include>
+  	</where>
+  	
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long">
+  	select count(*) from teacher_user
+  </select>
+  
+  <select id="count" resultType="java.lang.Long">
+  	select count(*) from teacher_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	delete a from teacher_user a where a.id = #{id}
+  </delete>
+  
+  <delete id="delete" parameterType="java.util.Map">
+  	delete a from teacher_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </delete>
+  
+  <!-- 实体通用方法  end  -->
+  
+  <!-- 修改 start -->
+  <update id="update" parameterType="persistent.prestige.modules.edu.model.TeacherUser" >
+  	update teacher_user a 
+  	<set>              
+	  		<if test="account != null">
+		  		a.account = #{account},
+		  	</if>
+	  		<if test="password != null">
+		  		a.password = #{password},
+		  	</if>
+	  		<if test="username != null">
+		  		a.username = #{username},
+		  	</if>
+	  		<if test="sex != null">
+		  		a.sex = #{sex},
+		  	</if>
+	  		<if test="delFlag != null">
+		  		a.del_flag = #{delFlag},
+		  	</if>
+    </set>
+    where a.id = #{id}
+  </update>
+  <!-- 修改 end -->
+  
+  <!-- 新增 start -->
+  <insert id="create" parameterType="persistent.prestige.modules.edu.model.TeacherUser" 
+  			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	INSERT INTO teacher_user(
+		  		account,
+		  		password,
+		  		username,
+		  		sex,
+		  		del_flag
+		) VALUES (
+		  		#{account},
+		  		#{password},
+		  		#{username},
+		  		#{sex},
+		  		#{delFlag}
+		)
+	</insert>
+   <!-- 新增 end -->
+   
+   
+   <select id="findGlobalUser" resultType="persistent.prestige.modules.edu.model.GlobalUser">
+       select a.account,a.db_pos as dbPos,a.tenant from global_user a where a.account=#{account}
+   </select>
+   
+   <select id="findAllUser" resultType="persistent.prestige.modules.edu.model.TeacherUser">
+      select  a.id,a.account,a.password,a.username,a.sex,a.del_flag from h_xsgjzx.teacher_user a
+      	union 
+      select  b.id,b.account,b.password,b.username,b.sex,b.del_flag from h_xsyz.teacher_user b
+      	union 
+      select  c.id,c.account,c.password,c.username,c.sex,c.del_flag from m_fhzx.teacher_user c
+      	union 
+      select  d.id,d.account,d.password,d.username,d.sex,d.del_flag from m_fhzx.teacher_user d
+   </select>
+  
+</mapper>

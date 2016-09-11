@@ -7,8 +7,11 @@
 package persistent.prestige.modules.passport.dao;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import persistent.prestige.modules.passport.model.AccTest;
 import persistent.prestige.modules.passport.model.User;
 import persistent.prestige.platform.api.annotation.MybatisScan;
 import persistent.prestige.platform.base.dao.Dao;
@@ -22,5 +25,7 @@ import persistent.prestige.platform.base.dao.Dao;
 @Repository("userDao")
 @MybatisScan
 public interface UserDao extends Dao<User, Integer>{
+	
+	public List<AccTest> findAccTest();
 
 }

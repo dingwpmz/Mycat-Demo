@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.edu.dao.TeacherPossitionUserDao" >
+  
+  <!-- 查询的列  start  -->
+  <sql id="base_columns" >
+  		a.teacher_p_id,
+  		a.possion_t_id,
+  		a.depart_id,
+  		a.take_date,
+  		a.take_file,
+  		a.take_cause,
+  		a.depose_date,
+  		a.depose_file,
+  		a.depose_cause
+  </sql>
+  
+  <sql id="all_columns" >
+   <include refid="base_columns" />
+  </sql>
+  <!-- 查询的列  end  -->
+  
+  <!-- 分页  start  -->
+  <sql id = "page">
+  	<if test="start != null and end != null and start >= 0 and end >= 0 ">
+  		limit #{start},#{end}
+  	</if>
+  </sql>
+  <!-- 分页  end  -->
+  
+  <!-- 查询条件 start -->
+  <sql id="comm_where">
+  	1=1
+  		<if test="teacherPid != null and teacherPid != '' ">
+	  		and a.teacher_p_id = #{teacherPid}
+	  	</if>
+  		<if test="possionTid != null and possionTid != '' ">
+	  		and a.possion_t_id = #{possionTid}
+	  	</if>
+  		<if test="departId != null and departId != '' ">
+	  		and a.depart_id = #{departId}
+	  	</if>
+  		<if test="takeDate != null and takeDate != '' ">
+	  		and a.take_date = #{takeDate}
+	  	</if>
+  		<if test="takeFile != null and takeFile != '' ">
+	  		and a.take_file = #{takeFile}
+	  	</if>
+  		<if test="takeCause != null and takeCause != '' ">
+	  		and a.take_cause = #{takeCause}
+	  	</if>
+  		<if test="deposeDate != null and deposeDate != '' ">
+	  		and a.depose_date = #{deposeDate}
+	  	</if>
+  		<if test="deposeFile != null and deposeFile != '' ">
+	  		and a.depose_file = #{deposeFile}
+	  	</if>
+  		<if test="deposeCause != null and deposeCause != '' ">
+	  		and a.depose_cause = #{deposeCause}
+	  	</if>
+  </sql>
+  <!-- 查询条件 end  -->
+  
+  <!-- 实体通用方法  start  -->
+  <select id="find" resultType="persistent.prestige.modules.edu.model.TeacherPossitionUser" parameterType="java.lang.Integer" >
+    select 
+    <include refid="all_columns" />
+    from teacher_possition_user a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByIds" resultType="persistent.prestige.modules.edu.model.TeacherPossitionUser">
+  	 select 
+     <include refid="all_columns" />
+     from teacher_possition_user a
+     where a.id in 
+     <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+     </foreach>
+  </select>
+  
+  
+  <select id="query" resultType="persistent.prestige.modules.edu.model.TeacherPossitionUser" parameterType="java.util.Map" >
+  	select 
+  	<include refid="all_columns"></include>
+  	from teacher_possition_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  		<include refid="page"></include>
+  	</where>
+  	
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long">
+  	select count(*) from teacher_possition_user
+  </select>
+  
+  <select id="count" resultType="java.lang.Long">
+  	select count(*) from teacher_possition_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	delete a from teacher_possition_user a where a.id = #{id}
+  </delete>
+  
+  <delete id="delete" parameterType="java.util.Map">
+  	delete a from teacher_possition_user a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </delete>
+  
+  <!-- 实体通用方法  end  -->
+  
+  <!-- 修改 start -->
+  <update id="update" parameterType="persistent.prestige.modules.edu.model.TeacherPossitionUser" >
+  	update teacher_possition_user a 
+  	<set>              
+	  		<if test="teacherPid != null">
+		  		a.teacher_p_id = #{teacherPid},
+		  	</if>
+	  		<if test="possionTid != null">
+		  		a.possion_t_id = #{possionTid},
+		  	</if>
+	  		<if test="departId != null">
+		  		a.depart_id = #{departId},
+		  	</if>
+	  		<if test="takeDate != null">
+		  		a.take_date = #{takeDate},
+		  	</if>
+	  		<if test="takeFile != null">
+		  		a.take_file = #{takeFile},
+		  	</if>
+	  		<if test="takeCause != null">
+		  		a.take_cause = #{takeCause},
+		  	</if>
+	  		<if test="deposeDate != null">
+		  		a.depose_date = #{deposeDate},
+		  	</if>
+	  		<if test="deposeFile != null">
+		  		a.depose_file = #{deposeFile},
+		  	</if>
+	  		<if test="deposeCause != null">
+		  		a.depose_cause = #{deposeCause},
+		  	</if>
+    </set>
+    where a.id = #{id}
+  </update>
+  <!-- 修改 end -->
+  
+  <!-- 新增 start -->
+  <insert id="create" parameterType="persistent.prestige.modules.edu.model.TeacherPossitionUser" 
+  			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	INSERT INTO teacher_possition_user(
+		  		teacher_p_id,
+		  		possion_t_id,
+		  		depart_id,
+		  		take_date,
+		  		take_file,
+		  		take_cause,
+		  		depose_date,
+		  		depose_file,
+		  		depose_cause
+		) VALUES (
+		  		#{teacherPid},
+		  		#{possionTid},
+		  		#{departId},
+		  		#{takeDate},
+		  		#{takeFile},
+		  		#{takeCause},
+		  		#{deposeDate},
+		  		#{deposeFile},
+		  		#{deposeCause}
+		)
+	</insert>
+   <!-- 新增 end -->
+  
+</mapper>

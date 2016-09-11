@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.edu.dao.OrganizationDao" >
+  
+  <!-- 查询的列  start  -->
+  <sql id="base_columns" >
+  		a.id,
+  		a.title
+  </sql>
+  
+  <sql id="all_columns" >
+   <include refid="base_columns" />
+  </sql>
+  <!-- 查询的列  end  -->
+  
+  <!-- 分页  start  -->
+  <sql id = "page">
+  	<if test="start != null and end != null and start >= 0 and end >= 0 ">
+  		limit #{start},#{end}
+  	</if>
+  </sql>
+  <!-- 分页  end  -->
+  
+  <!-- 查询条件 start -->
+  <sql id="comm_where">
+  	1=1
+  		<if test="id != null and id != '' ">
+	  		and a.id = #{id}
+	  	</if>
+  		<if test="title != null and title != '' ">
+	  		and a.title = #{title}
+	  	</if>
+  </sql>
+  <!-- 查询条件 end  -->
+  
+  <!-- 实体通用方法  start  -->
+  <select id="find" resultType="persistent.prestige.modules.edu.model.Organization" parameterType="java.lang.Integer" >
+    select 
+    <include refid="all_columns" />
+    from school_organization a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByIds" resultType="persistent.prestige.modules.edu.model.Organization">
+  	 select 
+     <include refid="all_columns" />
+     from school_organization a
+     where a.id in 
+     <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+     </foreach>
+  </select>
+  
+  
+  <select id="query" resultType="persistent.prestige.modules.edu.model.Organization" parameterType="java.util.Map" >
+  	select 
+  	<include refid="all_columns"></include>
+  	from school_organization a
+  	<where>
+  		<include refid="comm_where"></include>
+  		<include refid="page"></include>
+  	</where>
+  	
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long">
+  	select count(*) from school_organization
+  </select>
+  
+  <select id="count" resultType="java.lang.Long">
+  	select count(*) from school_organization a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	delete a from school_organization a where a.id = #{id}
+  </delete>
+  
+  <delete id="delete" parameterType="java.util.Map">
+  	delete a from school_organization a
+  	<where>
+  		<include refid="comm_where"></include>
+  	</where>
+  </delete>
+  
+  <!-- 实体通用方法  end  -->
+  
+  <!-- 修改 start -->
+  <update id="update" parameterType="persistent.prestige.modules.edu.model.Organization" >
+  	update school_organization a 
+  	<set>              
+	  		<if test="title != null">
+		  		a.title = #{title},
+		  	</if>
+    </set>
+    where a.id = #{id}
+  </update>
+  <!-- 修改 end -->
+  
+  <!-- 新增 start -->
+  <insert id="create" parameterType="persistent.prestige.modules.edu.model.Organization" 
+  			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	INSERT INTO school_organization(
+		  		title
+		) VALUES (
+		  		#{title}
+		)
+	</insert>
+   <!-- 新增 end -->
+  
+</mapper>

@@ -55,12 +55,13 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 			</list>
 		</property>
 
+		<!-- 
 		<property name="plugins">
 			<array>
 				<bean id="tenantInterceptor" class="persistent.prestige.platform.mybatis.Interceptor.TenantInterceptor" />
 			</array>
 		</property>
-		
+		 -->
 	</bean>
 
 	<!-- 扫描basePackage下所有以@MybatisScan注解的接口 -->
@@ -126,8 +127,9 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		<aop:pointcut expression="execution(* persistent.prestige..*.*Control*.*(..))" id="controll_pointcut"/>
 		
 		<aop:advisor pointcut-ref="allManagerMethod" advice-ref="txAdvice" />
+		<!-- 
 		<aop:advisor advice-ref="tenantControlInteceper" pointcut-ref="controll_pointcut"/>
-		
+		 -->
 	</aop:config>
 
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="persistent.prestige.modules.edu.dao.DemoDao" >
+  
+ 	<select id="findUser" resultType="persistent.prestige.modules.edu.model.TeacherUser">
+ 	    select a.id,a.account,a.password,a.username,a.sex,a.del_flag from teacher_user a 
+ 	    
+ 	    <where>
+ 	        <if test="dbPos != null and dbPos > -1">
+ 	            and a.db_pos=#{dbPos}
+ 	        </if>
+ 	        
+ 	        <if test="account != null and account !=''">
+ 	            and a.account=#{account}
+ 	        </if>
+ 	        
+ 	        <if test="password != null and password !=''">
+ 	            and a.password=#{password}
+ 	        </if>
+ 	        
+ 	    </where>
+ 	    
+ 	</select>
+ 	
+ 	<select id="searchOrgs" resultType="persistent.prestige.modules.edu.model.Organization">
+ 	    select a.id,a.title from school_organization a 
+ 	    
+ 	     <where>
+ 	        <if test="dbPos != null and dbPos > -1">
+ 	            and a.db_pos=#{dbPos}
+ 	        </if>
+ 	        
+ 	        <if test="title != null and title !=''">
+ 	            and a.account like concat(#{account}, '%')
+ 	        </if>
+ 	        
+ 	    </where>
+ 	</select>
+ 	
+ 	<insert id="saveOrg" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+ 	    insert into school_organization(title,db_pos) values (#{title},#{dbPos})
+ 	</insert>
+  
+</mapper>

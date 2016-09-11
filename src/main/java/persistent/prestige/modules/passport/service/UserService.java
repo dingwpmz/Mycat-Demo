@@ -20,4 +20,16 @@ public interface UserService  {
 	 * @return
 	 */
 	Integer saveUser(User user);
+	
+	/**
+	 * 测试带事务的
+	 * @return
+	 */
+	Integer saveTest();
+	
+	/**
+	 * 测试非事务的
+	 * @return
+	 */
+	Integer listTest();
 }

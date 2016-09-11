@@ -13,14 +13,23 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.kahadb.page.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import persistent.prestige.modules.common.tenant.TenantContextHolder;
+import persistent.prestige.modules.edu.dao.TeacherUserDao;
 
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
 public class TenantInterceptor implements Interceptor {
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
+		
+		String tenant = TenantContextHolder.getTenant();
+		
+		if(tenant == null || tenant == "") {
+			System.out.println("tenant 为空，不需要改写sql语句");
+			return invocation.proceed();
+		}
 
 		if (invocation.getTarget() instanceof RoutingStatementHandler) {
 
@@ -43,7 +52,7 @@ public class TenantInterceptor implements Interceptor {
 			// 给当前的page参数对象设置总记录数
 			System.out.println("处理之前" + sql);
 			//对 sql 增加 mycat 注解
-			String tenant = TenantContextHolder.getTenant();
+			
 			
 			sql = "/*!mycat:schema=" + tenant + " */" + sql;
 			
