@@ -160,12 +160,14 @@
    
    <select id = "findVos" resultType="persistent.prestige.modules.eshop.model.OrderVo">
         select 
-			a.id as itemId,a.goods_id as goodsId,a.price,a.num,a.totalPrice,
+			a.id as itemId,a.goods_id as goodsId,a.price,a.num,a.total_price as totalPrice,
   			b.id as orderId,b.order_no as orderNo,b.buy_uid as buyUid,b.seller_uid as sellerUid,
-  			b.total_price as totalPrice,b.status,c.name
+  			b.total_price as totalPrice,b.status
 		from es_order_item a 
 		left join es_order b on b.id=a.order_id
+		<!-- 
 		left join acc_user c on c.uid=b.buy_id   
+		 -->
 		where b.buy_uid=#{buyUid}
 		limit #{start},#{end}
    </select>

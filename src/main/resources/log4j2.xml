@@ -3,7 +3,7 @@
 <configuration status="OFF"  monitorInterval="1800">  
     <properties>  
         <property name="BACKUP_HOME">backup</property>  
-        <property name="PROJECT_PATH">logs</property>  
+        <property name="PROJECT_PATH">D:\\logs</property>  
         <property name="STAT_NAME">stat</property>  
         <property name="SERVER_NAME">jpweblog</property>  
     </properties>  
@@ -17,7 +17,7 @@
             filePattern="${PROJECT_PATH}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log">  
             <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level %thread %c:%line - %msg%n" />  
             <Policies>  
-                <TimeBasedTriggeringPolicy interval="360" modulate="true" />  
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />  
             </Policies>  
         </RollingRandomAccessFile>  
     </appenders>  

@@ -63,10 +63,18 @@ public class OrderControl {
 	@RequestMapping("/orders")
 	@ResponseBody
 	public Map orders(Map datas) {
+		Map result = new HashMap();
+		try {
+			List<OrderVo> ovs = orderService.findVos("506561911b44419daafea30e6e09c0e3", 0, 10);
+			result.put("code", 0);
+			result.put("data", ovs);
+		} catch(Throwable e) {
+			e.printStackTrace();
+			result.put("code", 1);
+			result.put("msg", "系统异常");
+		}
 		
-		List<OrderVo> ovs = orderService.findVos("4cfd6924cb704d9bb6dfbbd95470a7e8", 0, 10);
-		System.out.println(ovs);
-		return new HashMap();
+		return result;
 		
 	}
 	
