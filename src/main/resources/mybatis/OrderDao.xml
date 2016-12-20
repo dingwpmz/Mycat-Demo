@@ -171,5 +171,7 @@
 		where b.buy_uid=#{buyUid}
 		limit #{start},#{end}
    </select>
+   
+   <!-- 测试两张表，不同分片的join -->
   
 </mapper>
